@@ -22,6 +22,10 @@ yarn-error.log*
 **/.pytest_cache/
 **/.env
 
+# Log runtime del server FastAPI
+**/server.out.log
+**/server.err.log
+
 # ==========================================
 # File di Sistema e IDE
 # ==========================================
