@@ -1,0 +1,14 @@
+:root {
+  --brand-blue: #1e6ad1;
+  --brand-blue-dark: #154f9b;
+  --brand-blue-50: #eaf2fc;
+  --surface: #ffffff;
+  --text: #1a2233;
+  --text-muted: #5a6478;
+  --border: #d9e0ec;
+  --danger: #c0392b;
+  --danger-bg: #fdecea;
+  --radius-pill: 999px;
+  --radius-card: 16px;
+  --shadow-card: 0 10px 30px rgba(20, 50, 100, 0.08);
+}
