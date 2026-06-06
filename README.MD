@@ -82,3 +82,116 @@ git pull
 
 ---
 
+## Come Eseguire il Backend
+
+### 1. Posizionarsi nella cartella backend
+
+Dalla root del progetto:
+
+```powershell
+cd backend
+```
+
+### 2. Attivare il virtual environment
+
+Su Windows (PowerShell):
+
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+> Se PowerShell blocca lo script con un errore di execution policy, esegui una sola volta:
+> ```powershell
+> Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+> ```
+
+Una volta attivato, il prompt mostrerà `(venv)` all'inizio della riga.
+
+### 3. Avviare il server FastAPI con Uvicorn
+
+```powershell
+uvicorn main:app --reload
+```
+
+Il flag `--reload` riavvia automaticamente il server a ogni modifica del codice (utile in sviluppo).
+
+### 4. Testare gli endpoint con Swagger UI
+
+Apri il browser all'indirizzo:
+
+```
+http://localhost:8000/docs
+```
+
+Da qui puoi consultare la documentazione interattiva di tutti gli endpoint e provarli direttamente (Swagger UI).
+
+> In alternativa, la documentazione in stile ReDoc è disponibile su `http://localhost:8000/redoc`.
+
+---
+
+## Come Eseguire il Frontend
+
+Il frontend è un'app **React 19 + Vite + TypeScript** che comunica con il backend FastAPI. Per il login l'app si aspetta che il backend sia in esecuzione su `http://localhost:8000` (vedi sezione precedente).
+
+### Prerequisiti
+
+- **Node.js 20+** ([download](https://nodejs.org/)) — verifica con `node -v`
+- **npm** (incluso con Node)
+
+### 1. Posizionarsi nella cartella frontend
+
+Dalla root del progetto:
+
+```powershell
+cd frontend
+```
+
+### 2. Installare le dipendenze
+
+La prima volta (e ogni volta che `package.json` cambia):
+
+```powershell
+npm install
+```
+
+### 3. Avviare il server di sviluppo Vite
+
+```powershell
+npm run dev
+```
+
+Vite stamperà nel terminale l'URL locale, di norma:
+
+```
+http://localhost:5173
+```
+
+> Se la porta 5173 è già occupata, Vite ne userà automaticamente un'altra (es. 5174) e lo segnalerà nel log.
+
+### 4. Aprire l'app
+
+Vai su `http://localhost:5173` nel browser: vedrai la **pagina di login**. Effettuato l'accesso con un utente del DB, l'app reindirizza automaticamente alla home corrispondente al ruolo (`/doctor`, `/patient` o `/admin`).
+
+> Per resettare la sessione e tornare al login, apri DevTools (F12) → **Application** → **Local Storage** → rimuovi le chiavi `diabetify_token` e `diabetify_role`.
+
+### 5. (Opzionale) Configurare un URL backend diverso
+
+Di default il frontend chiama `http://localhost:8000`. Per puntare a un altro host, crea un file `frontend/.env.local`:
+
+```
+VITE_API_URL=http://altro-host:8000
+```
+
+e riavvia `npm run dev`.
+
+### 6. Build di produzione
+
+Per generare i file statici ottimizzati in `frontend/dist/`:
+
+```powershell
+npm run build
+npm run preview   # serve localmente la build per verifica
+```
+
+---
+

@@ -8,11 +8,12 @@ app = FastAPI(title="Diabetify API - Telemedicina")
 origins = [
     "http://localhost:5173",  # Porta standard di Vite/React
     "http://127.0.0.1:5173",
+    "null",
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],  # Permette tutti i metodi (GET, POST, PUT, DELETE)
     allow_headers=["*"],  # Permette tutti gli header (compresi quelli di autorizzazione)
