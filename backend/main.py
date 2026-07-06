@@ -4,17 +4,14 @@ from app.routers import auth, medico, paziente, admin, sistema
 
 app = FastAPI(title="Diabetify API - Telemedicina")
 
-# Configurazione CORS per permettere a React di comunicare con FastAPI
-origins = [
-    "http://localhost:5173",  # Porta standard di Vite/React
-    "http://127.0.0.1:5173",
-    "null",
-]
-
+# Configurazione CORS per permettere a React di comunicare con FastAPI.
+# Il frontend non usa mai cookie/credenziali di sessione (il JWT viaggia
+# nell'header Authorization), quindi allow_credentials resta False: e' l'unica
+# combinazione coerente con allow_origins=["*"] secondo lo spec CORS.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],  # Permette tutti i metodi (GET, POST, PUT, DELETE)
     allow_headers=["*"],  # Permette tutti gli header (compresi quelli di autorizzazione)
 )
