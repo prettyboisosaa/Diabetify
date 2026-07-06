@@ -3,12 +3,32 @@
   --brand-blue-dark: #154f9b;
   --brand-blue-50: #eaf2fc;
   --surface: #ffffff;
+  --surface-alt: #f5f8fd;
   --text: #1a2233;
   --text-muted: #5a6478;
   --border: #d9e0ec;
   --danger: #c0392b;
   --danger-bg: #fdecea;
+
+  /* Colori di severita' per notifiche/alert (RF-13/14) e stato dati */
+  --warning: #b7791f;
+  --warning-bg: #fdf3e0;
+  --success: #1e7d4f;
+  --success-bg: #e7f6ee;
+  --info: var(--brand-blue);
+  --info-bg: var(--brand-blue-50);
+
   --radius-pill: 999px;
   --radius-card: 16px;
+  --radius-sm: 8px;
   --shadow-card: 0 10px 30px rgba(20, 50, 100, 0.08);
+
+  /* Scala di spaziatura a base 4px (evita magic number nei CSS module) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
 }

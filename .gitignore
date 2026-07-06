@@ -26,6 +26,9 @@ yarn-error.log*
 **/server.out.log
 **/server.err.log
 
+# Database SQLite locale (generato da init_db.py + seed.py, NON va versionato)
+**/*.db
+
 # ==========================================
 # File di Sistema e IDE
 # ==========================================
@@ -34,6 +37,5 @@ Thumbs.db
 **/.vscode/
 **/.idea/
 
-
-requirements.txt
-diabetify.db
+# Impostazioni locali di Claude Code (per-sviluppatore, non condivise)
+**/.claude/settings.local.json
