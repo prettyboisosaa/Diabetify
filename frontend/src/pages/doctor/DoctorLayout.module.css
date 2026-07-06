@@ -1,0 +1,136 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-alt);
+  color: var(--text);
+}
+
+/* ---------- Header ---------- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.logoMark {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--brand-blue);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.brandName {
+  font-weight: 700;
+}
+.brandRole {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.doctorName {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.logout {
+  font: inherit;
+  font-weight: 600;
+  color: var(--brand-blue);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1) var(--space-4);
+  cursor: pointer;
+}
+.logout:hover {
+  background: var(--surface-alt);
+}
+
+/* ---------- Body: nav + main ---------- */
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-4);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+.navLink:hover {
+  background: var(--surface-alt);
+  color: var(--text);
+}
+.navLinkActive {
+  background: var(--brand-blue-50);
+  color: var(--brand-blue-dark);
+}
+.navCount {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-pill);
+  background: var(--danger);
+  color: #fff;
+  font-size: 0.7rem;
+  display: inline-grid;
+  place-items: center;
+}
+
+.main {
+  padding: var(--space-5) var(--space-4);
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ---------- Da tablet in su: nav laterale ---------- */
+@media (min-width: 768px) {
+  .body {
+    flex-direction: row;
+  }
+  .nav {
+    flex-direction: column;
+    border-bottom: none;
+    border-right: 1px solid var(--border);
+    min-width: 220px;
+    padding: var(--space-4) var(--space-3);
+  }
+}

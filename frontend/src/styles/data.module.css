@@ -1,0 +1,265 @@
+/* Stili di pagina condivisi dagli attori (medico e paziente):
+   header, tabelle dati, liste, tab, form, notifiche/messaggi.
+   Consumano i token di theme.css. */
+
+.pageHeader {
+  margin-bottom: var(--space-5);
+}
+.pageTitle {
+  margin: 0 0 var(--space-1);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.pageSubtitle {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+.rowBetween {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* ---------- Tabella dati ---------- */
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 480px;
+}
+.table th,
+.table td {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+.table th {
+  background: var(--surface-alt);
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+.table tbody tr:hover {
+  background: var(--surface-alt);
+}
+.rowAlert {
+  background: var(--danger-bg);
+}
+.rowAlert:hover {
+  background: var(--danger-bg);
+}
+
+/* ---------- Lista pazienti (card cliccabili) ---------- */
+.patientGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media (min-width: 600px) {
+  .patientGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 900px) {
+  .patientGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.patientCard {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4);
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+.patientCard:hover {
+  transform: translateY(-2px);
+  border-color: var(--brand-blue);
+}
+.patientCard:focus-visible {
+  outline: 3px solid var(--brand-blue-50);
+  outline-offset: 2px;
+}
+.patientName {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.patientMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ---------- Tabs sezioni ---------- */
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-5);
+}
+.tab {
+  font: inherit;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: var(--space-3) var(--space-3);
+  cursor: pointer;
+}
+.tab:hover {
+  color: var(--text);
+}
+.tabActive {
+  color: var(--brand-blue-dark);
+  border-bottom-color: var(--brand-blue);
+}
+
+/* ---------- Form ---------- */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media (min-width: 600px) {
+  .formGrid2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.formActions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+.formFeedback {
+  margin: var(--space-3) 0 0;
+  font-size: 0.9rem;
+}
+.feedbackOk { color: var(--success); }
+.feedbackErr { color: var(--danger); }
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--brand-blue);
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+}
+.backLink:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Dettaglio / definizioni ---------- */
+.defList {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+}
+.defTerm {
+  font-weight: 600;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: var(--space-1);
+}
+.defValue {
+  margin: 0;
+}
+
+/* ---------- Notifiche / messaggi ---------- */
+.notifItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-left-width: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.notifCritical { border-left-color: var(--danger); }
+.notifWarning { border-left-color: var(--warning); }
+.notifInfo { border-left-color: var(--info); }
+.notifResolved { opacity: 0.6; }
+.notifText { margin: 0; }
+.notifMeta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.msgUnread {
+  border-left: 4px solid var(--brand-blue);
+}
+.msgBody {
+  margin: var(--space-2) 0 0;
+  white-space: pre-wrap;
+}
+
+/* ---------- Statistiche dashboard (stat tiles) ---------- */
+.statGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media (min-width: 600px) {
+  .statGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.statTile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4);
+}
+.statLabel {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 var(--space-2);
+}
+.statValue {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+.quickLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}

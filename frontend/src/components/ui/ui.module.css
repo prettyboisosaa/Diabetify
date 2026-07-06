@@ -1,0 +1,140 @@
+/* ============================================================
+   Stili condivisi dei componenti UI riusabili del lato medico.
+   Consumano i token di theme.css (colori, spaziatura, raggi).
+   ============================================================ */
+
+/* ---------- Card ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-5);
+}
+
+.cardTitle {
+  margin: 0 0 var(--space-4);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ---------- Button ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font: inherit;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-5);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--brand-blue-50);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btnPrimary {
+  background: var(--brand-blue);
+  color: #fff;
+}
+.btnPrimary:hover:not(:disabled) {
+  background: var(--brand-blue-dark);
+}
+
+.btnSecondary {
+  background: var(--surface);
+  color: var(--brand-blue);
+  border-color: var(--border);
+}
+.btnSecondary:hover:not(:disabled) {
+  background: var(--surface-alt);
+}
+
+.btnDanger {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-color: var(--danger);
+}
+.btnDanger:hover:not(:disabled) {
+  background: var(--danger);
+  color: #fff;
+}
+
+.btnSmall {
+  padding: var(--space-1) var(--space-3);
+  font-size: 0.85rem;
+}
+
+/* ---------- Badge ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+.badgeInfo { background: var(--info-bg); color: var(--info); }
+.badgeSuccess { background: var(--success-bg); color: var(--success); }
+.badgeWarning { background: var(--warning-bg); color: var(--warning); }
+.badgeCritical { background: var(--danger-bg); color: var(--danger); }
+.badgeNeutral { background: var(--surface-alt); color: var(--text-muted); }
+
+/* ---------- Field (label + input/textarea/select) ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.control {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  width: 100%;
+}
+.control:focus {
+  outline: none;
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 3px var(--brand-blue-50);
+}
+textarea.control {
+  min-height: 72px;
+  resize: vertical;
+}
+
+/* ---------- Stati (loading / error / empty) ---------- */
+.state {
+  padding: var(--space-5);
+  text-align: center;
+  color: var(--text-muted);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface-alt);
+}
+.stateError {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
