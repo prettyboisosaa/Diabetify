@@ -152,6 +152,31 @@ class PatientProfileResponse(ORMBase, PatientProfileBase):
     doctor_id: Optional[int] = None
 
 
+class AnamnesiUpdate(BaseModel):
+    """
+    RF-10 / UC-10: il medico aggiorna SOLO l'anamnesi del paziente.
+    A differenza di PatientProfileUpdate non espone `doctor_id`
+    (l'associazione paziente-medico e' competenza dell'Amministratore, RF-3).
+    Tutti i campi sono opzionali: si aggiornano solo quelli forniti.
+    """
+    fattori_rischio: Optional[str] = Field(None, max_length=2000)
+    patologie_pregresse: Optional[str] = Field(None, max_length=2000)
+    comorbita: Optional[str] = Field(None, max_length=2000)
+
+
+class MedicoPazienteListItem(ORMBase):
+    """
+    Riga sintetica per l'elenco pazienti lato medico (RF-9).
+    Arricchisce il profilo con qualche dato aggregato utile a colpo d'occhio.
+    """
+    id: int
+    nome: str
+    cognome: str
+    doctor_id: Optional[int] = None
+    num_notifiche_aperte: int = 0
+    ultima_glicemia: Optional[int] = None
+
+
 # Composito per ridurre round-trip lato frontend
 class UserWithProfileResponse(UserResponse):
     doctor_profile: Optional[DoctorProfileResponse] = None
@@ -168,6 +193,30 @@ class RegistrazionePazienteRequest(BaseModel):
 class RegistrazioneMedicoRequest(BaseModel):
     user: UserCreateByAdmin
     profile: DoctorProfileBase
+
+
+# --- Operazioni amministrative (RF-2, RF-3, extra) ---
+
+class AssociazioneMedico(BaseModel):
+    """RF-3 / UC-2: l'admin assegna (o rimuove) il medico di riferimento."""
+    doctor_id: Optional[int] = None
+
+
+class AnagraficaUpdate(BaseModel):
+    """L'admin corregge l'anagrafica di un utente. Campi opzionali."""
+    nome: Optional[str] = Field(None, min_length=1, max_length=100)
+    cognome: Optional[str] = Field(None, min_length=1, max_length=100)
+    email: Optional[EmailStr] = None
+
+
+class PasswordReset(BaseModel):
+    """L'admin imposta una nuova password per un utente."""
+    password: str = Field(..., min_length=12, max_length=128)
+
+    @field_validator("password")
+    @classmethod
+    def password_complessa(cls, v: str) -> str:
+        return _validate_password_complessa(v)
 
 
 # =========================================================
@@ -334,6 +383,14 @@ class PatologiaConcomitanteCreate(PatologiaConcomitanteBase):
     pass
 
 
+class PatologiaConcomitanteUpdate(BaseModel):
+    """RF-5: il paziente aggiorna una patologia concomitante (es. data fine)."""
+    descrizione: Optional[str] = Field(None, min_length=1, max_length=300)
+    data_inizio: Optional[date] = None
+    data_fine: Optional[date] = None
+    note: Optional[str] = Field(None, max_length=2000)
+
+
 class PatologiaConcomitanteResponse(ORMBase, PatologiaConcomitanteBase):
     id: int
     patient_id: int
@@ -363,6 +420,15 @@ class TerapiaParallelaCreate(TerapiaParallelaBase):
     pass
 
 
+class TerapiaParallelaUpdate(BaseModel):
+    """RF-5: il paziente aggiorna una terapia parallela (es. data fine, posologia)."""
+    farmaco: Optional[str] = Field(None, min_length=1, max_length=200)
+    posologia: Optional[str] = Field(None, max_length=500)
+    data_inizio: Optional[date] = None
+    data_fine: Optional[date] = None
+    note: Optional[str] = Field(None, max_length=2000)
+
+
 class TerapiaParallelaResponse(ORMBase, TerapiaParallelaBase):
     id: int
     patient_id: int
@@ -377,6 +443,15 @@ class MessaggioCreate(BaseModel):
     oggetto: str = Field(..., min_length=1, max_length=200)
     corpo: str = Field(..., min_length=1, max_length=5000)
     # mittente_id dal JWT
+
+
+class MessaggioPazienteCreate(BaseModel):
+    """
+    RF-7: il paziente scrive al PROPRIO medico di riferimento. Il destinatario
+    non e' esposto: viene ricavato server-side da PatientProfile.doctor_id.
+    """
+    oggetto: str = Field(..., min_length=1, max_length=200)
+    corpo: str = Field(..., min_length=1, max_length=5000)
 
 
 class MessaggioResponse(ORMBase):
@@ -434,8 +509,9 @@ __all__ = [
     # Profili
     "DoctorProfileBase", "DoctorProfileCreate", "DoctorProfileResponse",
     "PatientProfileBase", "PatientProfileCreate", "PatientProfileUpdate",
-    "PatientProfileResponse",
+    "PatientProfileResponse", "AnamnesiUpdate", "MedicoPazienteListItem",
     "RegistrazionePazienteRequest", "RegistrazioneMedicoRequest",
+    "AssociazioneMedico", "AnagraficaUpdate", "PasswordReset",
     # Glicemia
     "RilevazioneGlicemicaBase", "RilevazioneGlicemicaCreate",
     "RilevazioneGlicemicaResponse", "GlicemiaAggregata",
@@ -446,11 +522,11 @@ __all__ = [
     # Sintomo / patologie / terapie parallele
     "SintomoBase", "SintomoCreate", "SintomoUpdate", "SintomoResponse",
     "PatologiaConcomitanteBase", "PatologiaConcomitanteCreate",
-    "PatologiaConcomitanteResponse",
+    "PatologiaConcomitanteUpdate", "PatologiaConcomitanteResponse",
     "TerapiaParallelaBase", "TerapiaParallelaCreate",
-    "TerapiaParallelaResponse",
+    "TerapiaParallelaUpdate", "TerapiaParallelaResponse",
     # Messaggi / notifiche / audit
-    "MessaggioCreate", "MessaggioResponse",
+    "MessaggioCreate", "MessaggioPazienteCreate", "MessaggioResponse",
     "NotificaResponse", "AuditLogResponse",
     # Generici
     "MessageResponse", "ORMBase",

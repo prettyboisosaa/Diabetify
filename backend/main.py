@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import auth  # Importeremo questo modulo tra un attimo
+from app.routers import auth, medico, paziente, admin, sistema
 
 app = FastAPI(title="Diabetify API - Telemedicina")
 
@@ -19,8 +19,12 @@ app.add_middleware(
     allow_headers=["*"],  # Permette tutti gli header (compresi quelli di autorizzazione)
 )
 
-# Inclusione delle rotte di autenticazione
+# Inclusione delle rotte di autenticazione e dei quattro attori
 app.include_router(auth.router)
+app.include_router(medico.router)
+app.include_router(paziente.router)
+app.include_router(admin.router)
+app.include_router(sistema.router)
 
 @app.get("/")
 def read_root():
